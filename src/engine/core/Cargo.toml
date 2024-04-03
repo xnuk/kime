@@ -14,6 +14,7 @@ kime-engine-backend-latin = { path = "../backends/latin" }
 kime-engine-backend-math = { path = "../backends/math", optional = true }
 kime-engine-backend-emoji = { path = "../backends/emoji", optional = true }
 serde_yaml = "0.9"
+# serde_json = "1.0.114"
 parking_lot = "0.12"
 fontdb = { version = "0.11.2", features = ["fontconfig"] }
 

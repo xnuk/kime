@@ -1,7 +1,71 @@
 use crate::KeyMap;
 use fontdb::{Family, Query};
 pub use kime_engine_config::*;
-use std::fs;
+use std::{fs, io};
+
+use serde_yaml::value::Value as YamlValue;
+
+#[derive(Debug)]
+pub enum SerdeError {
+    SerdeYaml(serde_yaml::Error),
+    SerdeJson(serde_json::Error),
+}
+
+impl From<serde_yaml::Error> for SerdeError {
+    fn from(value: serde_yaml::Error) -> Self {
+        Self::SerdeYaml(value)
+    }
+}
+
+impl From<serde_json::Error> for SerdeError {
+    fn from(value: serde_json::Error) -> Self {
+        Self::SerdeJson(value)
+    }
+}
+
+impl std::fmt::Display for SerdeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SerdeError::SerdeYaml(x) => x.fmt(f),
+            SerdeError::SerdeJson(x) => x.fmt(f),
+        }
+    }
+}
+impl std::error::Error for SerdeError {}
+
+fn sanitize(value: YamlValue) -> YamlValue {
+    match value {
+        YamlValue::Tagged(x) => {
+            let key = format!("{}", x.tag).strip_prefix('!');
+            let value = sanitize(x.value);
+            let mut map = serde_yaml::value::Mapping::with_capacity(1);
+            map.insert(YamlValue::String(key), value);
+            YamlValue::Mapping(map)
+        }
+        YamlValue::Sequence(x) => YamlValue::Sequence(x.into_iter().map(sanitize).collect()),
+        YamlValue::Mapping(x) => YamlValue::Mapping(
+            x.into_iter()
+                .map(|(key, value)| (sanitize(key), sanitize(value)))
+                .collect(),
+        ),
+        x => x,
+    }
+}
+
+pub fn parse_from_yaml_value(value: YamlValue) -> Result<RawConfig, SerdeError> {
+    let val = serde_json::to_value(sanitize(value))?;
+    Ok(serde_json::from_value(val)?)
+}
+
+pub fn parse_config_from_str(x: &str) -> Result<RawConfig, SerdeError> {
+    let val: YamlValue = serde_yaml::from_str(x)?;
+    Ok(parse_from_yaml_value(val)?)
+}
+
+pub fn parse_config_from_reader(x: impl io::Read) -> Result<RawConfig, SerdeError> {
+    let val: YamlValue = serde_yaml::from_reader(x)?;
+    Ok(parse_from_yaml_value(val)?)
+}
 
 /// Preprocessed engine config
 pub struct Config {
@@ -115,7 +179,7 @@ pub fn load_engine_config_from_config_dir() -> Option<Config> {
     let dir = xdg::BaseDirectories::with_prefix("kime").ok()?;
     let config: RawConfig = dir
         .find_config_file("config.yaml")
-        .and_then(|config| serde_yaml::from_reader(std::fs::File::open(config).ok()?).ok())
+        .and_then(|config| parse_config_from_reader(std::fs::File::open(config).ok()?).ok())
         .unwrap_or_default();
 
     Some(Config::from_engine_config_with_dir(config.engine, &dir))
@@ -126,7 +190,7 @@ pub fn load_other_configs_from_config_dir() -> Option<(DaemonConfig, IndicatorCo
     let dir = xdg::BaseDirectories::with_prefix("kime").ok()?;
     let config: RawConfig = dir
         .find_config_file("config.yaml")
-        .and_then(|config| serde_yaml::from_reader(std::fs::File::open(config).ok()?).ok())
+        .and_then(|config| parse_config_from_reader(std::fs::File::open(config).ok()?).ok())
         .unwrap_or_default();
 
     Some((config.daemon, config.indicator, config.log))

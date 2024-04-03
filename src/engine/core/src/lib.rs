@@ -2,7 +2,9 @@ mod config;
 mod os;
 
 #[cfg(unix)]
-pub use config::{load_engine_config_from_config_dir, load_other_configs_from_config_dir};
+pub use config::{
+    load_engine_config_from_config_dir, load_other_configs_from_config_dir, parse_config_from_str,
+};
 pub use config::{
     Config, DaemonConfig, DaemonModule, EngineConfig, EnumSet, Hotkey, IconColor, IndicatorConfig,
     InputCategory, InputMode, LevelFilter, LogConfig, RawConfig,

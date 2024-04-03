@@ -1,3 +1,6 @@
+#[cfg(feature = "config-serde")]
+mod json;
+
 use enum_map::Enum;
 use enumset::{enum_set, EnumSetType};
 use maplit::btreemap;
