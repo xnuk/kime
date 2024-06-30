@@ -3,22 +3,22 @@ name: CI
 on:
   push:
     branches:
-      - 'develop'
+      - 'next'
       - 'releases/*'
   pull_request:
     branches:
-      - 'develop'
+      - 'next'
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v18
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@v27
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Caching cargo
