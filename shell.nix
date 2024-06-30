@@ -13,7 +13,7 @@ mkShell {
   buildInputs = deps.kimeBuildInputs;
   nativeBuildInputs = deps.kimeNativeBuildInputs ++ (with pkgs; [
     rustfmt
-    gnome.gedit
+    gedit
     llvmPackages_14.lldb
   ]);
   CMAKE_EXPORT_COMPILE_COMMANDS = 1;
