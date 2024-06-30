@@ -8,7 +8,7 @@ let
   testArgs = if debug then "" else "--release";
 in
 with pkgs;
-llvmPackages_14.stdenv.mkDerivation rec {
+llvmPackages_18.stdenv.mkDerivation rec {
   name = "kime";
   src = ./.;
   buildInputs = deps.kimeBuildInputs;
@@ -19,7 +19,7 @@ llvmPackages_14.stdenv.mkDerivation rec {
     #sha256 = "0000000000000000000000000000000000000000000000000000";
     sha256 = "sha256-/o9b7YvrpV+IujkllFWAz6Mg4CbS9BInF8antfZ0Vsw=";
   };
-  LIBCLANG_PATH = "${pkgs.llvmPackages_14.libclang.lib}/lib";
+  LIBCLANG_PATH = "${pkgs.llvmPackages_18.libclang.lib}/lib";
   dontUseCmakeConfigure = true;
   dontWrapQtApps = true;
   buildPhase = if debug then "bash scripts/build.sh -ad" else "bash scripts/build.sh -ar";
