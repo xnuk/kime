@@ -8,6 +8,11 @@ option(ENABLE_GTK4 "Enable GTK4 immodule" OFF)
 option(ENABLE_QT5 "Enable Qt5 immodule" OFF)
 option(ENABLE_QT6 "Enable Qt6 immodule" OFF)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_COMPILER "clang")
+set(CMAKE_CXX_COMPILER "clang++")
+
 set(CMAKE_SKIP_RPATH TRUE)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -fvisibility=hidden")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fvisibility=hidden")
