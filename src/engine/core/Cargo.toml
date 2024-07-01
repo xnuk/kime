@@ -14,15 +14,16 @@ kime-engine-backend-hanja = { path = "../backends/hanja", optional = true }
 kime-engine-backend-latin = { path = "../backends/latin" }
 kime-engine-backend-math = { path = "../backends/math", optional = true }
 kime-engine-backend-emoji = { path = "../backends/emoji", optional = true }
-serde_yaml = "0.9"
 parking_lot = "0.12"
 fontdb = { version = "0.11.2", features = ["fontconfig"] }
 
 [target.'cfg(unix)'.dependencies]
+serde_yaml = "0.9"
 xdg = "2.2.0"
 kime-run-dir = { path = "../../tools/run_dir" }
 
 [dev-dependencies]
+serde_yaml = "0.9"
 criterion = "0.4"
 pretty_assertions = "1.0.0"
 
