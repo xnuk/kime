@@ -1,3 +1,4 @@
+kime_version: '*'
 daemon:
   modules:
   - Xim

@@ -2,7 +2,9 @@ use kime_engine_core::{load_engine_config_from_config_dir, Key, KeyCode, KeyMap}
 
 use ansi_term::Color;
 use kime_engine_core::{Config, InputCategory, InputEngine, InputResult};
+use kime_version::build::VERSION;
 use pad::PadStr;
+use semver::{Version, VersionReq};
 use std::env;
 use std::io::BufRead;
 use strum::{EnumIter, EnumMessage, IntoEnumIterator, IntoStaticStr};
@@ -122,6 +124,17 @@ impl Check {
                     Ok(config) => config,
                     Err(err) => return CondResult::Fail(format!("Can't parse config.yaml: {err}")),
                 };
+
+                let current_version = Version::parse(VERSION.trim()).unwrap();
+
+                // too low version, for example.
+                if config.kime_version.matches(&Version::new(1, 0, 0)) {
+                    return CondResult::Fail(format!("Version information should be specified and not weak. Put this in the config file: `kime_version: '^{current_version}'`"));
+                }
+
+                if !config.kime_version.matches(&current_version) {
+                    return CondResult::Fail(format!("Current Kime version is {current_version}, does not matches with {}. Please check our CHANGELOG.md, and change to: `kime_version: '^{current_version}'`", config.kime_version));
+                }
 
                 match config.engine.translation_layer {
                     Some(ref raw_path) => {

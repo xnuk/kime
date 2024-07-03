@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 edition = "2021"
 
 [features]
-config-serde = ["serde", "enumset/serde", "log/serde"]
+config-serde = ["serde", "enumset/serde", "log/serde", "semver/serde"]
 
 [dependencies]
 kime-engine-backend = { path = "../backend" }
@@ -17,3 +17,4 @@ serde = { version = "1.0.124", features = ["derive"], optional = true }
 enumset = "1.0.6"
 enum-map = "2"
 maplit = "1.0.2"
+semver = { workspace = true }

@@ -27,5 +27,8 @@ members = [
     "src/tools/version",
 ]
 
+[workspace.dependencies]
+semver = "1.0.23"
+
 [profile.release]
 lto = true
