@@ -1,6 +1,7 @@
 use enum_map::Enum;
 use enumset::{enum_set, EnumSetType};
 use maplit::btreemap;
+use semver::VersionReq;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
@@ -198,6 +199,7 @@ impl Default for EngineConfig {
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "serde", serde(default))]
 pub struct RawConfig {
+    pub kime_version: VersionReq,
     pub daemon: DaemonConfig,
     pub indicator: IndicatorConfig,
     pub log: LogConfig,

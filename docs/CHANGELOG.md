@@ -3,6 +3,7 @@
 ## Unreleased
 
 ### Breaking
+* Now `kime-check` checks the Kime version if `kime_version` is specified in the config file, like: `kime_version: '^4.0.0'`. In future, Kime will refuse to run if `kime_version` is not in the config file.
 
 ### Improve
 
