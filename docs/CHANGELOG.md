@@ -3,7 +3,8 @@
 ## Unreleased
 
 ### Breaking
-* Now `kime-check` checks the Kime version if `kime_version` is specified in the config file, like: `kime_version: '^4.0.0'`. In future, Kime will refuse to run if `kime_version` is not in the config file.
+* **Config file format is reverted to before Kime 3.0.0**; we don't use YAML tag (`!Toggle [Hangul, Latin]` -> `Toggle: [Hangul, Latin]`). To migrate, undo the [3.0.0 Migration guide](https://github.com/Riey/kime/wiki/3.0.0-Migration-guide).
+* Now `kime-check` checks the Kime version if `kime_version` is specified in the config file, like: `kime_version: '^4.0.0'`. In the future, Kime may refuse to run if `kime_version` is not in the config file.
 
 ### Improve
 
