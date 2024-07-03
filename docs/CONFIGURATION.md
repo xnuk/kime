@@ -13,6 +13,12 @@ You can also change the location of config file using [`$XDG_CONFIG_DIR` or
 
 [xdg]: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#introduction
 
+# kime_version
+Specify kime version to run. It's [SemVer]. If you write only a version (without any symbols),
+it follows caret(`^`) behavior (from given version, and until next major version).
+
+[SemVer]: https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility
+
 # log
 
 Set kime programs logging level
