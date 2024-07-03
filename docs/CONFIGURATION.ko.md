@@ -11,6 +11,11 @@
 
 [xdg]: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#introduction
 
+# kime_version
+구동될 kime 버전을 지정합니다. [SemVer]를 사용하며, 기호 없이 버전만 적을 경우 caret(`^`) 행동을 따릅니다 (지정한 버전부터 다음 메이저 버전 이전까지).
+
+[SemVer]: https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility
+
 # log
 
 kime 프로그램들의 로그 레벨을 설정합니다
