@@ -18,12 +18,12 @@ parking_lot = "0.12"
 fontdb = { version = "0.11.2", features = ["fontconfig"] }
 
 [target.'cfg(unix)'.dependencies]
-serde_yaml = "0.9"
+serde_yaml = "0.8"
 xdg = "2.2.0"
 kime-run-dir = { path = "../../tools/run_dir" }
 
 [dev-dependencies]
-serde_yaml = "0.9"
+serde_yaml = "0.8"
 criterion = "0.4"
 pretty_assertions = "1.0.0"
 
