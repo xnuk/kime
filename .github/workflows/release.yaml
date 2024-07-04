@@ -107,6 +107,8 @@ jobs:
           asset_name: kime-${{ github.ref }}.tar.zst
           asset_content_type: application/zstd
 
+  # check qt versions in https://download.qt.io/online/qtsdkrepository/linux_x64/desktop/
+
   build-qt5:
     needs:
       - build-engine
@@ -116,13 +118,9 @@ jobs:
 
     strategy:
       matrix:
-        # 5.15.3 doesn't have binary release
+        # no binary releases after 5.15.3.
         qt5:
-          - 5.9.5
-          - 5.11.3
           - 5.12.8
-          - 5.12.9
-          - 5.14.2
           - 5.15.2
 
     steps:
@@ -185,7 +183,8 @@ jobs:
     strategy:
       matrix:
         qt6:
-          - 6.0.2
+          - 6.4.2
+          - 6.7.2
 
     steps:
       - name: Download engine
@@ -253,17 +252,15 @@ jobs:
           - qt5: 5.12.8
             pkg: deb
             name: ubuntu-20.04
-          - qt5: 5.14.2
-            pkg: deb
-            name: ubuntu-20.10
           - qt5: 5.15.2
             pkg: deb
             name: ubuntu-22.04
-          - qt5: 5.11.3
-            pkg: deb
-            name: debian-buster
           - qt5: 5.15.2
-            qt6: 6.0.2
+            qt6: 6.4.2
+            pkg: deb
+            name: ubuntu-24.04+debian-bookworm
+          - qt5: 5.15.2
+            qt6: 6.7.2
             pkg: zst
             name: latest
 
