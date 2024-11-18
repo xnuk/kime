@@ -3,11 +3,11 @@ name: CI
 on:
   push:
     branches:
-      - 'develop'
+      - 'next'
       - 'releases/*'
   pull_request:
     branches:
-      - 'develop'
+      - 'next'
 
 env:
   CARGO_TERM_COLOR: always
