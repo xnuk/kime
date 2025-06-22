@@ -27,4 +27,4 @@ COPY README.ko.md .
 COPY README.md .
 COPY VERSION .
 
-ENTRYPOINT [ "ci/build_xz.sh" ]
+ENTRYPOINT [ "ci/build_zst.sh" ]
